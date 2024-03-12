@@ -53,7 +53,9 @@ class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3):
         super(ResidualBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, padding=kernel_size//2)
-        self.relu = nn.GELU(inplace=True)
+        # self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.GELU()
+
         self.conv2 = nn.Conv2d(out_channels, in_channels, kernel_size=kernel_size, padding=kernel_size//2)
 
     def forward(self, x):
