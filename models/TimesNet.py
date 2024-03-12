@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.fft
 from layers.Embed import DataEmbedding
-from layers.Conv_Blocks import Inception_Block_V1, Inception_Block_V2, ResidualBlock, ResNet, ResBlock
+from layers.Conv_Blocks import Inception_Block_V1, Inception_Block_V2, ResidualBlock, ConvNeXtBlock
 
 
 def FFT_for_Period(x, k=2):
@@ -34,11 +34,18 @@ class TimesBlock(nn.Module):
         # )
 
         # resnet
+        # self.conv = nn.Sequential(
+        #     ResidualBlock(in_channels=configs.d_model, out_channels=512),
+        #     ResidualBlock(in_channels=configs.d_ff, out_channels=256),
+        #     ResidualBlock(in_channels=configs.d_ff, out_channels=128),
+        #     ResidualBlock(in_channels=configs.d_ff, out_channels=64),
+        # )
+
         self.conv = nn.Sequential(
-            ResidualBlock(in_channels=configs.d_model, out_channels=512),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=256),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=128),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=64),
+            ConvNeXtBlock(in_channels=configs.d_model, in_channels=configs.d_ff), 
+            ConvNeXtBlock(in_channels=configs.d_ff, in_channels=configs.d_ff), 
+            ConvNeXtBlock(in_channels=configs.d_ff, in_channels=configs.d_ff), 
+            ConvNeXtBlock(in_channels=configs.d_ff, in_channels=configs.d_model), 
         )
 
         # resnet18
