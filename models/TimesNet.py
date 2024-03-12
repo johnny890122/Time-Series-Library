@@ -42,10 +42,10 @@ class TimesBlock(nn.Module):
         # )
 
         self.conv = nn.Sequential(
-            ConvNeXtBlock(in_channels=configs.d_model, in_channels=configs.d_ff), 
-            ConvNeXtBlock(in_channels=configs.d_ff, in_channels=configs.d_ff), 
-            ConvNeXtBlock(in_channels=configs.d_ff, in_channels=configs.d_ff), 
-            ConvNeXtBlock(in_channels=configs.d_ff, in_channels=configs.d_model), 
+            ConvNeXtBlock(in_channels=configs.d_model, out_channels=configs.d_ff), 
+            ConvNeXtBlock(in_channels=configs.d_ff, out_channels=configs.d_ff), 
+            ConvNeXtBlock(in_channels=configs.d_ff, out_channels=configs.d_ff), 
+            ConvNeXtBlock(in_channels=configs.d_ff, out_channels=configs.d_model), 
         )
 
         # resnet18
