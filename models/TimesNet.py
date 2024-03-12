@@ -35,10 +35,13 @@ class TimesBlock(nn.Module):
 
         # resnet
         self.conv = nn.Sequential(
-            ResidualBlock(in_channels=configs.d_model, out_channels=configs.d_ff),
-            # ResidualBlock(in_channels=configs.d_ff, out_channels=256),
-            # ResidualBlock(in_channels=configs.d_ff, out_channels=128),
-            # ResidualBlock(in_channels=configs.d_ff, out_channels=64),
+            ResidualBlock(in_channels=configs.d_model, out_channels=512),
+            nn.GELU(),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=256),
+            nn.GELU(),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=128),
+            nn.GELU(),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=64),
         )
 
         # self.conv = nn.Sequential(
