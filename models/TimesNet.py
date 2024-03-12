@@ -24,7 +24,6 @@ class TimesBlock(nn.Module):
         self.seq_len = configs.seq_len
         self.pred_len = configs.pred_len
         self.k = configs.top_k
-        
         # parameter-efficient design
         # self.conv = nn.Sequential(
         #     Inception_Block_V1(configs.d_model, configs.d_ff,
@@ -37,8 +36,10 @@ class TimesBlock(nn.Module):
         # restnet
         self.conv = nn.Sequential(
             ResidualBlock(in_channels=configs.d_model, out_channels=configs.d_ff),
-            # ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
-            # ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
+            ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
             ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_model),
         )
 
