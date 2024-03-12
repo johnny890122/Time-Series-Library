@@ -37,8 +37,8 @@ class TimesBlock(nn.Module):
         # restnet
         self.conv = nn.Sequential(
             ResidualBlock(in_channels=configs.d_model, out_channels=configs.d_ff),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
+            # ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
+            # ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
             ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_model),
         )
 
