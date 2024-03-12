@@ -25,13 +25,13 @@ class TimesBlock(nn.Module):
         self.pred_len = configs.pred_len
         self.k = configs.top_k
         # parameter-efficient design
-        self.conv = nn.Sequential(
-            Inception_Block_V2(configs.d_model, configs.d_ff,
-                               num_kernels=configs.num_kernels),
-            nn.GELU(),
-            Inception_Block_V2(configs.d_ff, configs.d_model,
-                               num_kernels=configs.num_kernels)
-        )
+        # self.conv = nn.Sequential(
+        #     Inception_Block_V2(configs.d_model, configs.d_ff,
+        #                        num_kernels=configs.num_kernels),
+        #     nn.GELU(),
+        #     Inception_Block_V2(configs.d_ff, configs.d_model,
+        #                        num_kernels=configs.num_kernels)
+        # )
 
         # restnet 18 design
         self.conv = nn.Sequential(
