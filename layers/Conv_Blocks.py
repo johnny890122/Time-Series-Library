@@ -135,38 +135,17 @@ class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3):
         super(ResidualBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, padding=kernel_size//2)
-        self.conv2 = nn.Conv2d(out_channels, out_channels*2, kernel_size=kernel_size, padding=kernel_size//2)
-        self.conv3 = nn.Conv2d(out_channels*2, out_channels, kernel_size=kernel_size, padding=kernel_size//2)
-        self.conv4 = nn.Conv2d(out_channels, in_channels, kernel_size=kernel_size, padding=kernel_size//2)
         self.relu = nn.ReLU(inplace=True)
+        self.conv2 = nn.Conv2d(out_channels, in_channels, kernel_size=kernel_size, padding=kernel_size//2)
 
     def forward(self, x):
         identity = x
         out = self.conv1(x)
         out = self.relu(out)
         out = self.conv2(out)
-        out = self.conv3(x)
-        out = self.relu(out)
-        out = self.conv4(out)
-
         out += identity
         out = self.relu(out)
         return out
-
-class ConvNeXtBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1, groups=32):
-        super(ConvNeXtBlock, self).__init__()
-        self.depthwise_conv = nn.Conv2d(in_channels, in_channels, kernel_size=kernel_size, stride=stride, padding=padding, groups=in_channels)
-        self.pointwise_conv = nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=1, padding=0)
-        self.batch_norm = nn.BatchNorm2d(out_channels)
-        self.relu = nn.ReLU(inplace=True)
-    
-    def forward(self, x):
-        x = self.depthwise_conv(x)
-        x = self.pointwise_conv(x)
-        x = self.batch_norm(x)
-        x = self.relu(x)
-        return x
 
 class Inception_Block_V1(nn.Module):
     def __init__(self, in_channels, out_channels, num_kernels=6, init_weight=True):
