@@ -187,7 +187,6 @@ class ResNet(nn.Module):
         self.layer2 = self.make_layer(ResBlock, 128, 2, stride=2)
         self.layer3 = self.make_layer(ResBlock, 256, 2, stride=2)
         self.layer4 = self.make_layer(ResBlock, 512, 2, stride=2)
-        # self.fc = nn.Linear(1024, )
 
     # 这个函数主要是用来，重复同一个残差块
     def make_layer(self, block, channels, num_blocks, stride):
@@ -208,7 +207,7 @@ class ResNet(nn.Module):
         out = self.layer4(out)
         # out = F.avg_pool2d(out, kernel_size=(1, 4))
         out = out.view(out.size(0), -1)
-        out = nn.Linear(out.size(1), x.shape[1] * x.shape[2] * x.shape[3])(out).reshape((x_shape))
+        out = nn.Linear(out.size(1), x_shape[1] * x_shape[2] * x_shape[3])(out).reshape((x_shape))
         return out
 
 class Inception_Block_V1(nn.Module):
