@@ -33,12 +33,13 @@ class TimesBlock(nn.Module):
                                num_kernels=configs.num_kernels)
         )
 
-        # self.conv = nn.Sequential(
-        #     ResidualBlock(in_channels=configs.d_model, out_channels=configs.d_ff),
-        #     ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
-        #     ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_ff),
-        #     ResidualBlock(in_channels=configs.d_ff, out_channels=configs.d_model),
-        # )
+        # restnet 18 design
+        self.conv = nn.Sequential(
+            ResidualBlock(in_channels=configs.d_model, out_channels=64),
+            ResidualBlock(in_channels=64, out_channels=128),
+            ResidualBlock(in_channels=128, out_channels=256),
+            ResidualBlock(in_channels=256, out_channels=configs.d_model),
+        )
 
     def forward(self, x):
         B, T, N = x.size()
