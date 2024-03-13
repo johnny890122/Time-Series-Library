@@ -25,24 +25,24 @@ class TimesBlock(nn.Module):
         self.pred_len = configs.pred_len
         self.k = configs.top_k
         # parameter-efficient design
-        # self.conv = nn.Sequential(
-        #     Inception_Block_V1(configs.d_model, configs.d_ff,
-        #                        num_kernels=configs.num_kernels),
-        #     nn.GELU(),
-        #     Inception_Block_V1(configs.d_ff, configs.d_model,
-        #                        num_kernels=configs.num_kernels)
-        # )
+        self.conv = nn.Sequential(
+            Inception_Block_V1(configs.d_model, configs.d_ff,
+                               num_kernels=configs.num_kernels),
+            nn.GELU(),
+            Inception_Block_V1(configs.d_ff, configs.d_model,
+                               num_kernels=configs.num_kernels)
+        )
 
         # resnet
-        self.conv = nn.Sequential(
-            ResidualBlock(in_channels=configs.d_model, out_channels=512),
-            nn.GELU(),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=256),
-            nn.GELU(),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=128),
-            nn.GELU(),
-            ResidualBlock(in_channels=configs.d_ff, out_channels=64),
-        )
+        # self.conv = nn.Sequential(
+        #     ResidualBlock(in_channels=configs.d_model, out_channels=512),
+        #     nn.GELU(),
+        #     ResidualBlock(in_channels=configs.d_ff, out_channels=256),
+        #     nn.GELU(),
+        #     ResidualBlock(in_channels=configs.d_ff, out_channels=128),
+        #     nn.GELU(),
+        #     ResidualBlock(in_channels=configs.d_ff, out_channels=64),
+        # )
 
         # self.conv = nn.Sequential(
         #     ConvNeXtBlock(in_channels=configs.d_model, out_channels=configs.d_ff), 
