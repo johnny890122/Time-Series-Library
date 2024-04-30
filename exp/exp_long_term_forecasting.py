@@ -280,7 +280,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             "leadtime": idx_lst,
             'rmse': rmse_lst,
             'mape': mape_lst}
-        ).to_csv('rmse_mape.csv', index=False)
+        ).to_csv(f'{self.args.model}_rmse_mape.csv', index=False)
 
         # result save
         folder_path = './results/' + setting + '/'
